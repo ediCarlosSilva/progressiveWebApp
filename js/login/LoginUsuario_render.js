@@ -1,23 +1,23 @@
-const LoginUsuario_render = (function($){
-    const $LoginForm = function(){
+const LoginUsuario_render = (function($) {
+    const $LoginForm = function() {
         let $loginForm = $("<form>")
-                        .addClass("loginForm")
+            .addClass("loginForm")
 
         let $labelInputUsuario = $("<label>")
-                                    .attr("for", "loginForm-usuario")
-                                    .text("Quem é você?")
-                                    .addClass("loginForm-label")
+            .attr("for", "loginForm-usuario")
+            .text("Quem é você?")
+            .addClass("loginForm-label")
 
         let $inputUsuario = $("<input>")
-                                .attr("placeholder", "nome de usuário")
-                                .attr("id", "loginForm-usuario")
-                                .attr("autofocus", true)
-                                .addClass("loginForm-input")
+            .attr("placeholder", "nome de usuário")
+            .attr("id", "loginForm-usuario")
+            .attr("autofocus", true)
+            .addClass("loginForm-input")
 
         let $btnSubmit = $("<button>")
-                            .attr("type", "submmit")
-                            .addClass("loginForm-submit")
-                            .text("Ok")
+            .attr("type", "submmit")
+            .addClass("loginForm-submit")
+            .text("Ok")
 
         $loginForm
             .append($labelInputUsuario)
@@ -27,24 +27,24 @@ const LoginUsuario_render = (function($){
         return $loginForm
     }
 
-    const $LoginStatus = function(usuario){
+    const $LoginStatus = function(usuario) {
         let $loginStatus = $("<p>")
-                            .addClass("loginStatus")
-                            .text("Logado como: ")
+            .addClass("loginStatus")
+            .text("Logado como: ")
 
         let $loginStatus_usuario = $("<span>")
-                                    .addClass("loginStatus-usuario")
-                                    .text(usuario)
+            .addClass("loginStatus-usuario")
+            .text(usuario)
 
         let $loginStatus_sair = $("<button>")
-                                .addClass("loginStatus-sair")
-                                .text("sair")
+            .addClass("loginStatus-sair")
+            .text("sair")
 
         $loginStatus
             .append($loginStatus_usuario)
             .append($loginStatus_sair)
 
-        $loginStatus.on("click", function(){
+        $loginStatus.on("click", function() {
             $loginStatus.trigger("sair")
             $loginStatus.remove()
         })
@@ -54,17 +54,17 @@ const LoginUsuario_render = (function($){
     let $loginForm
     let $loginStatus
 
-    function clean(){
+    function clean() {
         $loginForm && $loginForm.remove()
         $loginStatus && $loginStatus.remove()
     }
 
-    function login(props){
-        if(props.validacao && props.validacao(props.usuario) || !props.validacao && true){
+    function login(props) {
+        if (props.validacao && props.validacao(props.usuario) || !props.validacao && true) {
             props.onLogin && props.onLogin(props.usuario)
             clean()
             $loginStatus = new $LoginStatus(props.usuario)
-            $loginStatus.on("sair", function(){
+            $loginStatus.on("sair", function() {
                 logout(props)
                 props.onLogout && props.onLogout()
             })
@@ -74,16 +74,16 @@ const LoginUsuario_render = (function($){
         }
     }
 
-    function logout(props){
+    function logout(props) {
         clean()
         $loginForm = new $LoginForm();
-        $loginForm.on("submit", function(event){
+        $loginForm.on("submit", function(event) {
             event.preventDefault()
             let usuarioDigitado = $loginForm
-                                    .find("input")
-                                    .val()
-                                    .trim()
-            if(usuarioDigitado){
+                .find("input")
+                .val()
+                .trim()
+            if (usuarioDigitado) {
                 props.usuario = usuarioDigitado
                 login(props)
             }
@@ -92,8 +92,8 @@ const LoginUsuario_render = (function($){
         $loginForm.find("input").focus()
     }
 
-    return function(props){
-        if(props.logado){
+    return function(props) {
+        if (props.logado) {
             login(props)
         } else {
             logout(props)
