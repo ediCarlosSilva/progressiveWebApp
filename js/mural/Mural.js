@@ -25,7 +25,7 @@ const Mural = (function(_render, Filtro) {
         const urlsImagens = Cartao.pegaImagens(cartao);
 
         urlsImagens.forEach(url => {
-            fetch(url).then(resposta => {
+            fetch(url, { 'mode': 'no-cors' }).then(resposta => {
                 caches.open("ceep-imagens").then(cache => {
                     cache.put(url, resposta);
                 })
