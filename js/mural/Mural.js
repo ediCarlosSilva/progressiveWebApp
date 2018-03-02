@@ -61,11 +61,12 @@ const Mural = (function(_render, Filtro) {
 
         if (logado) {
             cartoes.push(cartao)
-
             salvaCartoes()
-
             cartao.on("mudanca.**", render)
             preparaCartao(cartao);
+
+
+
             render()
             return true
         } else {
